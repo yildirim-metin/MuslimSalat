@@ -39,9 +39,9 @@ public abstract class BaseRepository<Entity> : IRepository<Entity> where Entity 
         return _context.SaveChanges() == entities.Count();
     }
 
-    public IEnumerable<Entity> GetAll()
+    public IEnumerable<Entity> GetAll(Func<Entity, bool>? predicate = null)
     {
-        return _data;
+        return predicate is not null ? _data.Where(predicate) : _data;
     }
 
     public Entity? GetOne(int id)
