@@ -1,3 +1,5 @@
+DROP DATABASE [MuslimSalat]
+
 IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'MuslimSalat')
 BEGIN
     CREATE DATABASE [MuslimSalat];
@@ -13,7 +15,7 @@ CREATE TABLE [dbo].[User] (
     [Username] nvarchar(100),
     [PasswordHash] nvarchar(255),
     [IdAddress] int,
-    PRIMARY KEY ([Id])
+    CONSTRAINT [PK_User] PRIMARY KEY ([Id])
 );
 
 CREATE TABLE [dbo].[Address] (
@@ -22,7 +24,7 @@ CREATE TABLE [dbo].[Address] (
     [Locality] nvarchar(250),
     [Longitude] nvarchar(50),
     [Latitude] nvarchar(50),
-    PRIMARY KEY ([Id])
+    CONSTRAINT [PK_Address] PRIMARY KEY ([Id])
 );
 
 CREATE TABLE [dbo].[Prayer] (
@@ -30,7 +32,7 @@ CREATE TABLE [dbo].[Prayer] (
     [Name] nvarchar(30) NOT NULL,
     [Datetime] datetime2(0) NOT NULL,
     [Done] bit DEFAULT 0 NOT NULL,
-    PRIMARY KEY ([Id])
+    CONSTRAINT [PK_Prayer] PRIMARY KEY ([Id])
 );
 
 CREATE TABLE [dbo].[Mission] (
@@ -38,21 +40,21 @@ CREATE TABLE [dbo].[Mission] (
     [Name] nvarchar(250) NOT NULL,
     [Description] nvarchar(500),
     [Level] nvarchar(50) NOT NULL,
-    PRIMARY KEY ([Id])
+    CONSTRAINT [PK_Mission] PRIMARY KEY ([Id])
 );
 
 CREATE TABLE [dbo].[Parameter] (
     [Id] int NOT NULL IDENTITY(1,1),
     [PrayerReminderMinutes] tinyint DEFAULT 15 NOT NULL,
     [CalculationStrategy] bit DEFAULT 0 NOT NULL,
-    PRIMARY KEY ([Id])
+    CONSTRAINT [PK_Parameter] PRIMARY KEY ([Id])
 );
 
 CREATE TABLE [dbo].[PrayerReminder] (
     [Id] int NOT NULL IDENTITY(1,1),
     [Name] nvarchar(50) NOT NULL,
     [Datetime] datetime2(0) NOT NULL,
-    PRIMARY KEY ([Id])
+    CONSTRAINT [PK_PrayerReminder] PRIMARY KEY ([Id])
 );
 
 
