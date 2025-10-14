@@ -27,7 +27,7 @@ public abstract class BaseRepository<Entity> : IRepository<Entity> where Entity 
         return _context.SaveChanges() == 1;
     }
 
-    public bool DeleteById(int id)
+    public bool Delete(int id)
     {
         Entity? entity = GetOne(id);
         return entity is not null && Delete(entity);

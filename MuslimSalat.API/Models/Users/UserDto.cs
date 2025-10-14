@@ -1,6 +1,6 @@
 namespace MuslimSalat.API.Models.Users;
 
-public record class UserDto
+public record class RegisterFormDto
 {
     public int Id { get; set; }
 

@@ -8,4 +8,9 @@ public class UserRepository : BaseRepository<User>
     public UserRepository(MuslimSalatContext context) : base(context)
     {
     }
+
+    public User? GetOne(string username)
+    {
+        return _data.Where(u => u.Username == username).SingleOrDefault();
+    }
 }

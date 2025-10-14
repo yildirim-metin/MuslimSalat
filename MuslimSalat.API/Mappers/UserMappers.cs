@@ -5,7 +5,7 @@ namespace MuslimSalat.API.Mappers;
 
 public static class UserMappers
 {
-    public static User ToUser(this UserDto userDto)
+    public static User ToUser(this RegisterFormDto userDto)
     {
         return new()
         {
