@@ -23,6 +23,8 @@ builder.Services.AddDbContext<MuslimSalatContext>(options =>
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
 
+builder.Services.AddScoped<AuthService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
