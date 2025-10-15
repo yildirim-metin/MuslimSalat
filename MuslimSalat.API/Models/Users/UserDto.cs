@@ -2,7 +2,7 @@ namespace MuslimSalat.API.Models.Users;
 
 public record class RegisterFormDto
 {
-    public int Id { get; set; }
+ 
 
     public required string Username { get; set; }
 

@@ -25,7 +25,7 @@ public class UserService
         return user;
     }
     
-    public void Add(User user, string password)
+    public void Register(User user, string password)
     {
         user.PasswordHash = Argon2.Hash(password);
         _userRepository.Add(user);

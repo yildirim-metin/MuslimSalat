@@ -27,7 +27,7 @@ public class UserController : ControllerBase
     [HttpPut]
     public ActionResult Register([FromBody] RegisterFormDto form)
     {
-        _userService.Add(form.ToUser(), form.Password);
+        _userService.Register(form.ToUser(), form.Password);
         return NoContent();
     }
 

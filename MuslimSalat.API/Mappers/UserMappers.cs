@@ -9,7 +9,7 @@ public static class UserMappers
     {
         return new()
         {
-            Id = userDto.Id,
+            
             Username = userDto.Username,
             IdAddress = userDto.IdAddress,
             IdAddressNavigation = userDto.Address?.ToAddress(),
