@@ -9,22 +9,20 @@ public static class UserMappers
     {
         return new()
         {
-            
             Username = userDto.Username,
-            IdAddress = userDto.IdAddress,
             IdAddressNavigation = userDto.Address?.ToAddress(),
         };
     }
 
     public static Address ToAddress(this AddressDto addressDto)
     {
-        return new ()
+        return new()
         {
             Id = addressDto.Id,
             PostCode = addressDto.PostCode,
             Locality = addressDto.Locality,
             Longitude = addressDto.Longitude,
-            Latitude = addressDto.Latitude
+            Latitude = addressDto.Latitude,
         }; 
     }
 }
