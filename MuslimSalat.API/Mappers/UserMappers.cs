@@ -14,6 +14,13 @@ public static class UserMappers
         };
     }
 
+    public static User CopyFromRegisterFormDto(this User user, RegisterFormDto registerFormDto)
+    {
+        user.Username = registerFormDto.Username;
+        user.IdAddressNavigation = registerFormDto.Address?.ToAddress();
+        return user;
+    }
+
     public static Address ToAddress(this AddressDto addressDto)
     {
         return new()

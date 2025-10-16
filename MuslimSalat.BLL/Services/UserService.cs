@@ -24,11 +24,16 @@ public class UserService
 
         return user;
     }
-    
+
     public void Register(User user, string password)
     {
         user.PasswordHash = Argon2.Hash(password);
         _userRepository.Add(user);
+    }
+    
+    public User GetUser(int id)
+    {
+        return _userRepository.GetOne(id) ?? throw new Exception("User not found!");
     }
 
     public void Update(User user)

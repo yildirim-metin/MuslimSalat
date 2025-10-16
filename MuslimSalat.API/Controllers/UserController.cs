@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MuslimSalat.API.Mappers;
 using MuslimSalat.API.Models.Users;
 using MuslimSalat.BLL.Services;
+using MuslimSalat.DL.Entities;
 
 namespace MuslimSalat.API.Controllers;
 
@@ -16,14 +18,17 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-    [HttpPut]
-    public ActionResult Update([FromBody] RegisterFormDto form)
+    [HttpPut("{id}")]
+    [Authorize]
+    public ActionResult Update([FromRoute] int id, [FromBody] RegisterFormDto form)
     {
-        _userService.Update(form.ToUser());
+        User user = _userService.GetUser(id).CopyFromRegisterFormDto(form);
+        _userService.Update(user);
         return NoContent();
     }
 
     [HttpDelete]
+    [Authorize]
     public ActionResult DeleteAccount([FromRoute] int id)
     {
         _userService.Delete(id);

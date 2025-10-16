@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MuslimSalat.API.Extensions;
 using MuslimSalat.BLL.Services;
 using MuslimSalat.DAL.Configs;
 using MuslimSalat.DAL.Repositories;
@@ -9,11 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 EnvironmentFileReader envFile = new();
 envFile.Load();
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddOpenApi();
+
+builder.AddSwaggerAuthentication();
 
 builder.Services.AddDbContext<MuslimSalatContext>(options =>
 {
@@ -25,15 +26,24 @@ builder.Services.AddScoped<UserService>();
 
 builder.Services.AddScoped<AuthService>();
 
+builder.AddJwtAuthentication();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "OpenApi v1");
+    });
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
