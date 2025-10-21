@@ -27,6 +27,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddScoped<IPrayerTimeService, PrayerTimeService>();
+
 builder.AddJwtAuthentication();
 
 var app = builder.Build();
