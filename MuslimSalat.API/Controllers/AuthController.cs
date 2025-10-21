@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using MuslimSalat.API.Mappers;
 using MuslimSalat.API.Models.Users;
 using MuslimSalat.BLL.Services;
+using MuslimSalat.BLL.Services.Interfaces;
 using MuslimSalat.DL.Entities;
 
 namespace MuslimSalat.API.Controllers;
@@ -10,10 +11,10 @@ namespace MuslimSalat.API.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private readonly UserService _userService;
+    private readonly IUserService _userService;
     private readonly AuthService _authService;
 
-    public AuthController(UserService userService, AuthService authService)
+    public AuthController(IUserService userService, AuthService authService)
     {
         _userService = userService;
         _authService = authService;

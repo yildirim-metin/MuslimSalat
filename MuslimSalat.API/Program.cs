@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MuslimSalat.API.Extensions;
 using MuslimSalat.BLL.Services;
+using MuslimSalat.BLL.Services.Interfaces;
 using MuslimSalat.DAL.Configs;
 using MuslimSalat.DAL.Repositories;
 using MuslimSalat.DAL.Utils;
@@ -22,9 +23,9 @@ builder.Services.AddDbContext<MuslimSalatContext>(options =>
 });
 
 builder.Services.AddScoped<UserRepository>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.AddJwtAuthentication();
 
