@@ -54,4 +54,9 @@ public abstract class BaseRepository<Entity> : IRepository<Entity> where Entity 
         _data.Update(entity);
         return _context.SaveChanges() == 1;
     }
+
+    public bool Any(Func<Entity, bool>? predicate = null)
+    {
+        return predicate is not null ? _data.Any(predicate) : _data.Any();
+    }
 }

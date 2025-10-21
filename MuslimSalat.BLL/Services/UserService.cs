@@ -39,6 +39,10 @@ public class UserService : IUserService
 
     public void Update(User user)
     {
+        if (!_userRepository.Any(u => u.Id == user.Id))
+        {
+            throw new Exception("User not found!");
+        }
         _userRepository.Update(user);
     }
 
