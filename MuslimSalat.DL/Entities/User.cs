@@ -9,7 +9,11 @@ public partial class User
 
     public string? Username { get; set; }
 
+    public string Email { get; set; } = null!;
+
     public string? PasswordHash { get; set; }
+
+    public string Role { get; set; } = null!;
 
     public int? IdAddress { get; set; }
 

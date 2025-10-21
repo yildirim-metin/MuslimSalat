@@ -9,8 +9,8 @@ public class UserRepository : BaseRepository<User>
     {
     }
 
-    public User? GetOne(string username)
+    public User? GetOne(string emailOrUsername)
     {
-        return _data.Where(u => u.Username == username).SingleOrDefault();
+        return _data.Where(u => u.Username == emailOrUsername || u.Email == emailOrUsername).SingleOrDefault();
     }
 }

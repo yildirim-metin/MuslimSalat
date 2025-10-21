@@ -12,8 +12,10 @@ GO
 
 CREATE TABLE [dbo].[User] (
     [Id] int NOT NULL IDENTITY(1,1),
-    [Username] nvarchar(100),
+    [Username] nvarchar(100) CONSTRAINT [UQ_Username] UNIQUE,
+    [Email] nvarchar(200) NOT NULL,
     [PasswordHash] nvarchar(255),
+    [Role] nvarchar(50) NOT NULL CONSTRAINT [DF_Role] DEFAULT 'User',
     [IdAddress] int,
     CONSTRAINT [PK_User] PRIMARY KEY ([Id])
 );

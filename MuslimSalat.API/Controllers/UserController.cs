@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MuslimSalat.API.Mappers;
 using MuslimSalat.API.Models.Users;
-using MuslimSalat.BLL.Services;
 using MuslimSalat.BLL.Services.Interfaces;
 using MuslimSalat.DL.Entities;
+using MuslimSalat.DL.Enums;
 
 namespace MuslimSalat.API.Controllers;
 
@@ -29,7 +29,7 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete]
-    [Authorize]
+    [Authorize(Roles = nameof(UserRole.Admin))]
     public ActionResult DeleteAccount([FromRoute] int id)
     {
         _userService.Delete(id);

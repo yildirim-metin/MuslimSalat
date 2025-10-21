@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MuslimSalat.API.Mappers;
 using MuslimSalat.API.Models.Users;
-using MuslimSalat.BLL.Services;
 using MuslimSalat.BLL.Services.Interfaces;
 using MuslimSalat.DL.Entities;
 
@@ -12,9 +11,9 @@ namespace MuslimSalat.API.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IUserService _userService;
-    private readonly AuthService _authService;
+    private readonly IAuthService _authService;
 
-    public AuthController(IUserService userService, AuthService authService)
+    public AuthController(IUserService userService, IAuthService authService)
     {
         _userService = userService;
         _authService = authService;
@@ -42,7 +41,7 @@ public class AuthController : ControllerBase
             return BadRequest();
         }
 
-        User user = _userService.Login(loginForm.Username, loginForm.Password);
+        User user = _userService.Login(loginForm.EmailOrUsername, loginForm.Password);
 
         string token = _authService.GenerateToken(user);
 

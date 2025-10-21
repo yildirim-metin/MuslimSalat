@@ -71,7 +71,13 @@ public partial class MuslimSalatContext : DbContext
         {
             entity.ToTable("User");
 
+            entity.HasIndex(e => e.Username, "UQ_Username").IsUnique();
+
+            entity.Property(e => e.Email).HasMaxLength(200);
             entity.Property(e => e.PasswordHash).HasMaxLength(255);
+            entity.Property(e => e.Role)
+                .HasMaxLength(50)
+                .HasDefaultValue("User");
             entity.Property(e => e.Username).HasMaxLength(100);
 
             entity.HasOne(d => d.IdAddressNavigation).WithMany(p => p.Users)

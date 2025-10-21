@@ -14,9 +14,9 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public User Login(string username, string password)
+    public User Login(string emailOrUsermane, string password)
     {
-        User user = _userRepository.GetOne(username) ?? throw new Exception("User not found!");
+        User user = _userRepository.GetOne(emailOrUsermane) ?? throw new Exception("User not found!");
 
         if (!Argon2.Verify(user.PasswordHash, password))
         {

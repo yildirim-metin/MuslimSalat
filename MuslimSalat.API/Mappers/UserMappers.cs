@@ -1,5 +1,6 @@
 using MuslimSalat.API.Models.Users;
 using MuslimSalat.DL.Entities;
+using MuslimSalat.DL.Enums;
 
 namespace MuslimSalat.API.Mappers;
 
@@ -10,6 +11,8 @@ public static class UserMappers
         return new()
         {
             Username = userDto.Username,
+            Email = userDto.Email,
+            RoleValue = Enum.TryParse<UserRole>(userDto.Role, out var role) ? role : UserRole.User,
             IdAddressNavigation = userDto.Address?.ToAddress(),
         };
     }
@@ -17,6 +20,8 @@ public static class UserMappers
     public static User CopyFromRegisterFormDto(this User user, RegisterFormDto registerFormDto)
     {
         user.Username = registerFormDto.Username;
+        user.Email = registerFormDto.Email;
+        user.RoleValue = Enum.TryParse<UserRole>(registerFormDto.Role, out var role) ? role : UserRole.User;
         user.IdAddressNavigation = registerFormDto.Address?.ToAddress();
         return user;
     }

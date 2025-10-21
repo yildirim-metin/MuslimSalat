@@ -19,10 +19,10 @@ public class AuthService : IAuthService
 
     public string GenerateToken(User user)
     {
-        List<Claim> claims = new List<Claim>() {
+        List<Claim> claims = [
             new(ClaimTypes.Sid, user.Id.ToString()),
-            // new Claim(ClaimTypes.Role, user.Role.ToString())
-        };
+            new(ClaimTypes.Role, user.Role)
+        ];
 
         // Crédential pour signé le token (clé + algo)
         string secretKey = _config["Jwt:Key"]!;
