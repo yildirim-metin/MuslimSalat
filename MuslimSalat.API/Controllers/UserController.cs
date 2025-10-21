@@ -28,7 +28,7 @@ public class UserController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     [Authorize(Roles = nameof(UserRole.Admin))]
     public ActionResult DeleteAccount([FromRoute] int id)
     {
