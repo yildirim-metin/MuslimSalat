@@ -29,6 +29,12 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddScoped<IPrayerTimeService, PrayerTimeService>();
 
+builder.Services.AddHttpClient(builder.Configuration["PrayerTimesApi:Title"]!, client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["PrayerTimesApi:BaseUrl"]!);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
 builder.AddJwtAuthentication();
 
 var app = builder.Build();
