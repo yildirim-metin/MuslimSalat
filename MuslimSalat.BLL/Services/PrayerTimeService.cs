@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using MuslimSalat.API.Models.Prayers;
 using MuslimSalat.BLL.Services.Interfaces;
 
 namespace MuslimSalat.BLL.Services;
@@ -12,10 +13,21 @@ public class PrayerTimeService : IPrayerTimeService
         _httpClient = httpClientFactory.CreateClient(configuration["PrayerTimesApi:Title"]!);
     }
 
-    public async Task<string> GetPrayerTimeFromAddress(string address)
+    public async Task<string> GetPrayerTimeFromAddress(PrayerCalculationMethodParameter parameter)
     {
+        if (parameter.Address is null)
+        {
+            throw new NullReferenceException(nameof(parameter.Address));
+        }
+
         string date = DateTime.UtcNow.ToString("dd-MM-yyyy");
-        string url = $"{_httpClient.BaseAddress}/timingsByAddress/{date}?address={Uri.EscapeDataString(address)}";
+        string url = $"{_httpClient.BaseAddress}/timingsByAddress/{date}"
+                     + $"?address={Uri.EscapeDataString(parameter.Address)}"
+                     + $"&method={parameter.Method}"
+                     + $"&shafaq={parameter.Shafaq}"
+                     + $"&school={parameter.School}"
+                     + $"&midnightMode={parameter.MidnightMode}"
+                     + $"&calendarMethod={parameter.CalendarMethod}";
 
         HttpResponseMessage response = await _httpClient.GetAsync(url);
         response.EnsureSuccessStatusCode();

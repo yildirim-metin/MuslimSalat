@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MuslimSalat.API.Models.Prayers;
 using MuslimSalat.BLL.Services.Interfaces;
 using MuslimSalat.DL.Enums;
 
@@ -16,11 +17,11 @@ public class PrayerTimeController : ControllerBase
         _prayerTimeService = prayerTimeService;
     }
 
-    [HttpGet("{address}")]
+    [HttpGet]
     [Authorize(Roles = $"{nameof(UserRole.Admin)}, {nameof(UserRole.User)}")]
-    public async Task<ActionResult> GetPrayerTimeFromAddress([FromRoute] string address)
+    public async Task<ActionResult> GetPrayerTimeFromAddress([FromBody] PrayerCalculationMethodParameter parameter)
     {
-        string response = await _prayerTimeService.GetPrayerTimeFromAddress(address);
+        string response = await _prayerTimeService.GetPrayerTimeFromAddress(parameter);
         return Ok(response);
     }
 }
