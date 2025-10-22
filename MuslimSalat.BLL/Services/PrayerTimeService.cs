@@ -1,5 +1,6 @@
+using System.Text.Json;
 using Microsoft.Extensions.Configuration;
-using MuslimSalat.API.Models.Prayers;
+using MuslimSalat.BLL.Models.Prayers;
 using MuslimSalat.BLL.Services.Interfaces;
 
 namespace MuslimSalat.BLL.Services;
@@ -13,7 +14,7 @@ public class PrayerTimeService : IPrayerTimeService
         _httpClient = httpClientFactory.CreateClient(configuration["PrayerTimesApi:Title"]!);
     }
 
-    public async Task<string> GetPrayerTimeFromAddress(PrayerCalculationMethodParameter parameter)
+    public async Task<PrayerTiming> GetPrayerTimeFromAddress(PrayerCalculationMethodParameter parameter)
     {
         if (parameter.Address is null)
         {
@@ -32,8 +33,13 @@ public class PrayerTimeService : IPrayerTimeService
         HttpResponseMessage response = await _httpClient.GetAsync(url);
         response.EnsureSuccessStatusCode();
 
-        string responseBody = await response.Content.ReadAsStringAsync();
+        string json = await response.Content.ReadAsStringAsync();
 
-        return responseBody;
+        using JsonDocument doc = JsonDocument.Parse(json);
+        JsonElement timingElements = doc.RootElement.GetProperty("data").GetProperty("timings");
+
+        PrayerTiming timings = JsonSerializer.Deserialize<PrayerTiming>(timingElements)!;
+
+        return timings;
     }
 }

@@ -1,4 +1,4 @@
-namespace MuslimSalat.API.Models.Prayers;
+namespace MuslimSalat.BLL.Models.Prayers;
 
 public record class PrayerCalculationMethodParameter
 {

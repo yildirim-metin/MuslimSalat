@@ -1,8 +1,8 @@
-using MuslimSalat.API.Models.Prayers;
+using MuslimSalat.BLL.Models.Prayers;
 
 namespace MuslimSalat.BLL.Services.Interfaces;
 
 public interface IPrayerTimeService
 {
-    public Task<string> GetPrayerTimeFromAddress(PrayerCalculationMethodParameter parameter);
+    public Task<PrayerTiming> GetPrayerTimeFromAddress(PrayerCalculationMethodParameter parameter);
 }
