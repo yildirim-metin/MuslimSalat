@@ -4,5 +4,5 @@ namespace MuslimSalat.BLL.Services.Interfaces;
 
 public interface IPrayerTimeService
 {
-    public Task<string> GetPrayerTimeFromAddress(PrayerCalculationMethodParameter address);
+    public Task<string> GetPrayerTimeFromAddress(PrayerCalculationMethodParameter parameter);
 }
