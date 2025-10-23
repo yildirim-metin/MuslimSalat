@@ -1,15 +1,15 @@
 using Isopoh.Cryptography.Argon2;
 using MuslimSalat.BLL.Services.Interfaces;
-using MuslimSalat.DAL.Repositories;
+using MuslimSalat.DAL.Repositories.Interfaces;
 using MuslimSalat.DL.Entities;
 
 namespace MuslimSalat.BLL.Services;
 
 public class UserService : IUserService
 {
-    private readonly UserRepository _userRepository;
+    private readonly IUserRepository _userRepository;
 
-    public UserService(UserRepository userRepository)
+    public UserService(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }
