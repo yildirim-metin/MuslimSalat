@@ -18,4 +18,6 @@ public partial class User
     public int? IdAddress { get; set; }
 
     public virtual Address? IdAddressNavigation { get; set; }
+
+    public virtual Parameter? Parameter { get; set; }
 }

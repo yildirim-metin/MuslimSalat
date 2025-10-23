@@ -48,7 +48,16 @@ public partial class MuslimSalatContext : DbContext
         {
             entity.ToTable("Parameter");
 
+            entity.HasIndex(e => e.IdUser, "UQ_IdUser").IsUnique();
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.IdUser).ValueGeneratedOnAdd();
             entity.Property(e => e.PrayerReminderMinutes).HasDefaultValue((byte)15);
+
+            entity.HasOne(d => d.IdUserNavigation).WithOne(p => p.Parameter)
+                .HasForeignKey<Parameter>(d => d.IdUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Parameter_User");
         });
 
         modelBuilder.Entity<Prayer>(entity =>

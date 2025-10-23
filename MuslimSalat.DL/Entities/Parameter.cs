@@ -10,4 +10,8 @@ public partial class Parameter
     public byte PrayerReminderMinutes { get; set; }
 
     public bool CalculationStrategy { get; set; }
+
+    public int IdUser { get; set; }
+
+    public virtual User IdUserNavigation { get; set; } = null!;
 }
