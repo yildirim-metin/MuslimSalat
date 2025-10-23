@@ -19,7 +19,7 @@ public class PrayerTimeController : ControllerBase
 
     [HttpGet]
     [Authorize(Roles = $"{nameof(UserRole.Admin)}, {nameof(UserRole.User)}")]
-    public async Task<ActionResult> GetPrayerTimeFromAddress([FromBody] PrayerCalculationMethodParameter parameter)
+    public async Task<ActionResult> GetPrayerTimeFromAddress([FromQuery] PrayerCalculationMethodParameter parameter)
     {
         PrayerTiming timings = await _prayerTimeService.GetPrayerTimeFromAddress(parameter);
         return Ok(timings);

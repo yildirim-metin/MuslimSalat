@@ -6,7 +6,7 @@ using MuslimSalat.DL.Entities;
 
 namespace MuslimSalat.API.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/[controller]/[action]")]
 [ApiController]
 public class AuthController : ControllerBase
 {
@@ -33,7 +33,7 @@ public class AuthController : ControllerBase
         return Created();
     }
 
-    [HttpGet]
+    [HttpPost]
     public ActionResult Login([FromBody] LoginFormDto loginForm)
     {
         if (loginForm is null || !ModelState.IsValid)
