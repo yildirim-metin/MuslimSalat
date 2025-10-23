@@ -1,9 +1,4 @@
-using Microsoft.EntityFrameworkCore;
 using MuslimSalat.API.Extensions;
-using MuslimSalat.BLL.Services;
-using MuslimSalat.BLL.Services.Interfaces;
-using MuslimSalat.DAL.Configs;
-using MuslimSalat.DAL.Repositories;
 using MuslimSalat.DAL.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,27 +10,15 @@ builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
 
-builder.AddSwaggerAuthentication();
+builder.Services.AddSwaggerAuthentication();
 
-builder.Services.AddDbContext<MuslimSalatContext>(options =>
-{
-    options.UseSqlServer(EnvironmentFileReader.GetConnectionString());
-});
+builder.Services.AddPersistence();
 
-builder.Services.AddScoped<UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddApplicationDependencies();
 
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddExternalApi(builder.Configuration);
 
-builder.Services.AddScoped<IPrayerTimeService, PrayerTimeService>();
-
-builder.Services.AddHttpClient(builder.Configuration["PrayerTimesApi:Title"]!, client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["PrayerTimesApi:BaseUrl"]!);
-    client.DefaultRequestHeaders.Add("Accept", "application/json");
-});
-
-builder.AddJwtAuthentication();
+builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
