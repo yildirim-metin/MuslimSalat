@@ -24,6 +24,8 @@ public partial class MuslimSalatContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<UserMission> UserMissions { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Address>(entity =>
@@ -50,13 +52,10 @@ public partial class MuslimSalatContext : DbContext
 
             entity.HasIndex(e => e.IdUser, "UQ_IdUser").IsUnique();
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.IdUser).ValueGeneratedOnAdd();
             entity.Property(e => e.PrayerReminderMinutes).HasDefaultValue((byte)15);
 
             entity.HasOne(d => d.IdUserNavigation).WithOne(p => p.Parameter)
                 .HasForeignKey<Parameter>(d => d.IdUser)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Parameter_User");
         });
 
@@ -93,6 +92,21 @@ public partial class MuslimSalatContext : DbContext
                 .HasForeignKey(d => d.IdAddress)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_User_Address");
+        });
+
+        modelBuilder.Entity<UserMission>(entity =>
+        {
+            entity.ToTable("User_Mission");
+
+            entity.Property(e => e.CompletedDatetime).HasPrecision(0);
+
+            entity.HasOne(d => d.IdMissionNavigation).WithMany(p => p.UserMissions)
+                .HasForeignKey(d => d.IdMission)
+                .HasConstraintName("FK_UserMission_Mission");
+
+            entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.UserMissions)
+                .HasForeignKey(d => d.IdUser)
+                .HasConstraintName("FK_UserMission_User");
         });
 
         OnModelCreatingPartial(modelBuilder);

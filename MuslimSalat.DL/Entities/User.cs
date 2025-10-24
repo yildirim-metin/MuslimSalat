@@ -20,4 +20,6 @@ public partial class User
     public virtual Address? IdAddressNavigation { get; set; }
 
     public virtual Parameter? Parameter { get; set; }
+
+    public virtual ICollection<UserMission> UserMissions { get; set; } = new List<UserMission>();
 }

@@ -12,4 +12,6 @@ public partial class Mission
     public string? Description { get; set; }
 
     public string Level { get; set; } = null!;
+
+    public virtual ICollection<UserMission> UserMissions { get; set; } = new List<UserMission>();
 }
