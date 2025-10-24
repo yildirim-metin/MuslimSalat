@@ -28,7 +28,7 @@ public static class DependencyInjection
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? throw new MuslimSalatException(500, "Configuration is needed for Jwt:Key"))
+                    Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? throw new JwtKeyException())
                 ),
                 ValidateLifetime = true,
                 ValidateAudience = true,

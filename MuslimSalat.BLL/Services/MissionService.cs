@@ -26,7 +26,7 @@ public class MissionService : IMissionService
 
     public Mission GetMission(int id)
     {
-        return _missionRepository.GetOne(id) ?? throw new MuslimSalatException(404, "Mission not found!");
+        return _missionRepository.GetOne(id) ?? throw new NotFoundException("Mission not found!");
     }
 
     public void Update(Mission mission)

@@ -31,7 +31,7 @@ public class PrayerService : IPrayerService
 
     public Prayer GetPrayer(int id)
     {
-        return _prayerRepository.GetOne(id) ?? throw new MuslimSalatException(404, "Prayer not found!");
+        return _prayerRepository.GetOne(id) ?? throw new NotFoundException("Prayer not found!");
     }
 
     public void Update(Prayer prayer)
