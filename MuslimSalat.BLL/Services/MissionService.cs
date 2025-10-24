@@ -1,3 +1,4 @@
+using MuslimSalat.BLL.Exceptions;
 using MuslimSalat.BLL.Services.Interfaces;
 using MuslimSalat.DAL.Repositories.Interfaces;
 using MuslimSalat.DL.Entities;
@@ -25,7 +26,7 @@ public class MissionService : IMissionService
 
     public Mission GetMission(int id)
     {
-        return _missionRepository.GetOne(id) ?? throw new Exception("Mission not found!");
+        return _missionRepository.GetOne(id) ?? throw new MuslimSalatException(404, "Mission not found!");
     }
 
     public void Update(Mission mission)

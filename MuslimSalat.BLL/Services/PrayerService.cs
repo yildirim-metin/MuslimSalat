@@ -1,3 +1,4 @@
+using MuslimSalat.BLL.Exceptions;
 using MuslimSalat.BLL.Services.Interfaces;
 using MuslimSalat.DAL.Repositories.Interfaces;
 using MuslimSalat.DL.Entities;
@@ -30,7 +31,7 @@ public class PrayerService : IPrayerService
 
     public Prayer GetPrayer(int id)
     {
-        return _prayerRepository.GetOne(id) ?? throw new Exception("Prayer not found!");
+        return _prayerRepository.GetOne(id) ?? throw new MuslimSalatException(404, "Prayer not found!");
     }
 
     public void Update(Prayer prayer)

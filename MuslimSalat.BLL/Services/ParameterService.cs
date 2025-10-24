@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using MuslimSalat.BLL.Exceptions;
 using MuslimSalat.BLL.Services.Interfaces;
 using MuslimSalat.DAL.Repositories.Interfaces;
 using MuslimSalat.DL.Entities;
@@ -26,14 +27,14 @@ public class ParameterService : IParameterService
 
     public Parameter GetParameter(int idUser)
     {
-        return _parameterRepository.GetParameterByIdUser(idUser) ?? throw new Exception("Parameter not found!");
+        return _parameterRepository.GetParameterByIdUser(idUser) ?? throw new MuslimSalatException(404, "Parameter not found!");
     }
 
     public void Update(int id, Parameter parameter)
     {
         if (!_parameterRepository.Any(p => p.Id == id))
         {
-            throw new Exception("Parameter not found!");
+            throw new MuslimSalatException(404, "Parameter not found!");
         }
         _parameterRepository.Update(parameter);
     }
@@ -42,7 +43,7 @@ public class ParameterService : IParameterService
     {
         if (!_parameterRepository.UpdateCalculationStrategy(idUser, strategy))
         {
-            throw new Exception("Parameter not found!");
+            throw new MuslimSalatException(404,"Parameter not found!");
         }
     }
 
@@ -50,7 +51,7 @@ public class ParameterService : IParameterService
     {
         if (!_parameterRepository.UpdatePrayerReminderMinutes(idUser, minutes))
         {
-            throw new Exception("Parameter not found!");
+            throw new MuslimSalatException(404, "Parameter not found!");
         }
     }
 }

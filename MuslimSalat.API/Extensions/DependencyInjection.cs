@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MuslimSalat.BLL.Exceptions;
 using MuslimSalat.BLL.Services;
 using MuslimSalat.BLL.Services.Interfaces;
 using MuslimSalat.DAL.Configs;
@@ -27,7 +28,7 @@ public static class DependencyInjection
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? throw new Exception("Configuration is needed for Jwt:Key"))
+                    Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? throw new MuslimSalatException(500, "Configuration is needed for Jwt:Key"))
                 ),
                 ValidateLifetime = true,
                 ValidateAudience = true,
