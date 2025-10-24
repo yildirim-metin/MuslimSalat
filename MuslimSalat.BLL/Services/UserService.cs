@@ -1,4 +1,5 @@
 using Isopoh.Cryptography.Argon2;
+using MuslimSalat.BLL.Exceptions;
 using MuslimSalat.BLL.Services.Interfaces;
 using MuslimSalat.DAL.Repositories.Interfaces;
 using MuslimSalat.DL.Entities;
@@ -16,11 +17,11 @@ public class UserService : IUserService
 
     public User Login(string emailOrUsermane, string password)
     {
-        User user = _userRepository.GetOne(emailOrUsermane) ?? throw new Exception("User not found!");
+        User user = _userRepository.GetOne(emailOrUsermane) ?? throw new MuslimSalatException(404,"User not found!");
 
         if (!Argon2.Verify(user.PasswordHash, password))
         {
-            throw new Exception("Wrong Password");
+            throw new MuslimSalatException(404,"Wrong Password");
         }
 
         return user;
@@ -34,14 +35,14 @@ public class UserService : IUserService
     
     public User GetUser(int id)
     {
-        return _userRepository.GetOne(id) ?? throw new Exception("User not found!");
+        return _userRepository.GetOne(id) ?? throw new MuslimSalatException(404,"User not found!");
     }
 
     public void Update(User user)
     {
         if (!_userRepository.Any(u => u.Id == user.Id))
         {
-            throw new Exception("User not found!");
+            throw new MuslimSalatException(404,"User not found!");
         }
         _userRepository.Update(user);
     }
