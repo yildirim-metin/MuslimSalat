@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using MuslimSalat.API.Mappers;
 using MuslimSalat.API.Models.Parameters;
 using MuslimSalat.BLL.Services.Interfaces;
-using MuslimSalat.DL.Entities;
 using MuslimSalat.DL.Enums;
 
 namespace MuslimSalat.API.Controllers;
