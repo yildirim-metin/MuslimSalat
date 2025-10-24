@@ -1,4 +1,5 @@
 using MuslimSalat.API.Extensions;
+using MuslimSalat.API.Middlewares;
 using MuslimSalat.DAL.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +39,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 
