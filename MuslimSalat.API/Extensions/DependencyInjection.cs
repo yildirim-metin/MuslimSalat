@@ -79,4 +79,20 @@ public static class DependencyInjection
 
         return services;
     }
+
+    public static IServiceCollection AddCorsPolicy(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AngularWebApp", policy =>
+            {
+                policy.WithOrigins(["http://localhost:4200"])
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
+
+        return services;
+    }
 }

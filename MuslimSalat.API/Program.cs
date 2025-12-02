@@ -22,6 +22,8 @@ builder.Services.AddExternalApi(builder.Configuration);
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
+builder.Services.AddCorsPolicy();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,6 +43,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseCors("AngularWebApp");
 
 app.MapControllers();
 

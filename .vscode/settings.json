@@ -1,3 +1,23 @@
 {
-    "dotnet.defaultSolution": "MuslimSalat.sln"
+    "dotnet.defaultSolution": "MuslimSalat.sln",
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#9aaceb",
+        "activityBar.background": "#9aaceb",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#d52a50",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "commandCenter.border": "#15202b99",
+        "sash.hoverBorder": "#9aaceb",
+        "statusBar.background": "#7089e2",
+        "statusBar.foreground": "#15202b",
+        "statusBarItem.hoverBackground": "#4666d9",
+        "statusBarItem.remoteBackground": "#7089e2",
+        "statusBarItem.remoteForeground": "#15202b",
+        "titleBar.activeBackground": "#7089e2",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveBackground": "#7089e299",
+        "titleBar.inactiveForeground": "#15202b99"
+    },
+    "peacock.color": "#7089e2"
 }
