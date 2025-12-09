@@ -16,6 +16,22 @@ public static class MissionMappers
         };
     }
 
+    public static MissionDto ToMissionDto(this Mission mission)
+    {
+        return new()
+        {
+            Id = mission.Id,
+            Name = mission.Name,
+            Description = mission.Description,
+            Level = mission.Level,
+        };
+    }
+
+    public static IEnumerable<MissionDto> ToMissionDtos(this IEnumerable<Mission> missions)
+    {
+        return missions.Select(m => m.ToMissionDto());
+    }
+
     public static Mission CopyFromMissionDto(this Mission mission, MissionDto missionDto)
     {
         mission.Name = missionDto.Name;

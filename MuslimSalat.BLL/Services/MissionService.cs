@@ -29,6 +29,11 @@ public class MissionService : IMissionService
         return _missionRepository.GetOne(id) ?? throw new NotFoundException("Mission not found!");
     }
 
+    public IEnumerable<Mission> GetMissions()
+    {
+        return _missionRepository.GetAll();
+    }
+
     public void Update(Mission mission)
     {
         _missionRepository.Update(mission);

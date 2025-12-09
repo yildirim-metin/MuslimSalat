@@ -26,13 +26,21 @@ public class MissionController : ControllerBase
         Mission mission = _missionService.GetMission(id);
         return Ok(mission);
     }
+
+    [HttpGet]
+    [Authorize(Roles = $"{nameof(UserRole.Admin)}, {nameof(UserRole.User)}")]
+    public ActionResult GetMissions()
+    {
+        return Ok(_missionService.GetMissions().ToMissionDtos());
+    }
     
     [HttpPost]
     [Authorize(Roles = $"{nameof(UserRole.Admin)}, {nameof(UserRole.User)}")]
     public ActionResult Add([FromBody] MissionDto missionDto)
     {
-        _missionService.Add(missionDto.ToMission());
-        return NoContent();
+        Mission mission = missionDto.ToMission();
+        _missionService.Add(mission);
+        return CreatedAtAction(nameof(GetMission), new { id = mission.Id }, mission.ToMissionDto());
     }
     
     [HttpPut("{id}")]
@@ -44,7 +52,7 @@ public class MissionController : ControllerBase
         return NoContent();
     }
     
-    [HttpDelete]
+    [HttpDelete("{id}")]
     [Authorize(Roles = nameof(UserRole.Admin))]
     public ActionResult Delete([FromRoute] int id)
     {

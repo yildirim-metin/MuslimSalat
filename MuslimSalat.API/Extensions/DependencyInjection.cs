@@ -53,7 +53,7 @@ public static class DependencyInjection
         services.AddScoped<IRepository<Prayer>, PrayerRepository>();
         services.AddScoped<IPrayerService, PrayerService>();
 
-        services.AddScoped<IRepository<Mission>, MissionController>();
+        services.AddScoped<IRepository<Mission>, MissionRepository>();
         services.AddScoped<IMissionService, MissionService>();
 
         return services;
