@@ -57,6 +57,6 @@ public class MissionController : ControllerBase
     public ActionResult Delete([FromRoute] int id)
     {
         _missionService.Delete(id);
-        return NoContent();
+        return Accepted();
     }
 }

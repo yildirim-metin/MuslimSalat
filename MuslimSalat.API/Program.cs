@@ -34,6 +34,8 @@ if (app.Environment.IsDevelopment())
     {
         options.SwaggerEndpoint("/openapi/v1.json", "OpenApi v1");
     });
+
+    app.UseCors("AngularWebApp");
 }
 
 app.UseHttpsRedirection();
@@ -43,8 +45,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseMiddleware<ExceptionMiddleware>();
-
-app.UseCors("AngularWebApp");
 
 app.MapControllers();
 
