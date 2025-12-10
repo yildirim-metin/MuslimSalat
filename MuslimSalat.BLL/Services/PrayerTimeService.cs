@@ -16,12 +16,7 @@ public class PrayerTimeService : IPrayerTimeService
 
     public async Task<PrayerTiming> GetPrayerTimeFromAddress(PrayerCalculationMethodParameter parameter)
     {
-        if (parameter.Address is null)
-        {
-            throw new NullReferenceException(nameof(parameter.Address));
-        }
-
-        string date = DateTime.UtcNow.ToString("dd-MM-yyyy");
+        string date = parameter.Date.ToString("dd-MM-yyyy");
         string url = $"{_httpClient.BaseAddress}/timingsByAddress/{date}"
                      + $"?address={Uri.EscapeDataString(parameter.Address)}"
                      + $"&method={parameter.Method}"
