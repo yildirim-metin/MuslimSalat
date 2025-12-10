@@ -51,4 +51,14 @@ public class UserService : IUserService
     {
         _userRepository.Delete(id);
     }
+
+    public IEnumerable<User> GetAll()
+    {
+
+  
+    {
+         
+        return _userRepository.GetAll(); 
+    }
+    }
 }

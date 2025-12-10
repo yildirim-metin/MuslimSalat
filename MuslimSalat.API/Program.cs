@@ -4,6 +4,7 @@ using MuslimSalat.DAL.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 EnvironmentFileReader envFile = new();
 envFile.Load();
 
@@ -15,18 +16,25 @@ builder.Services.AddOpenApi(options =>
 });
 
 builder.Services.AddPersistence();
-
 builder.Services.AddApplicationDependencies();
-
 builder.Services.AddExternalApi(builder.Configuration);
-
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
-builder.Services.AddCorsPolicy();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AngularWebApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -40,8 +48,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
 
+app.UseCors("AngularWebApp");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseMiddleware<ExceptionMiddleware>();

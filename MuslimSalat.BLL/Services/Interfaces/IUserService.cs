@@ -9,4 +9,6 @@ public interface IUserService
     public User GetUser(int id);
     public void Update(User user);
     public void Delete(int id);
+
+    IEnumerable<User> GetAll();
 }

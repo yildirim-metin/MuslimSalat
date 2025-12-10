@@ -1,4 +1,4 @@
-@MuslimSalat.API_HostAddress = http://localhost:5042
+@MuslimSalat.API_HostAddress = https://localhost:5042
 
 GET {{MuslimSalat.API_HostAddress}}/weatherforecast/
 Accept: application/json

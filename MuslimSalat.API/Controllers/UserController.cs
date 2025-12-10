@@ -19,6 +19,23 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
+    
+    [HttpGet]
+    public ActionResult<IEnumerable<User>> GetAll()
+    {
+        return Ok(_userService.GetAll());
+    }
+
+    
+    [HttpPost]
+    public ActionResult Register([FromBody] RegisterFormDto form)
+    {
+        User user = form.ToUser(); // Ton mapper existant
+        _userService.Register(user, form.Password);
+        return Ok(user);
+    }
+
+    
     [HttpPut("{id}")]
     [Authorize]
     public ActionResult Update([FromRoute] int id, [FromBody] RegisterFormDto form)
