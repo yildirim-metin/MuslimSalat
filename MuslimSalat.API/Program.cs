@@ -19,7 +19,7 @@ builder.Services.AddPersistence();
 builder.Services.AddApplicationDependencies();
 builder.Services.AddExternalApi(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
-builder.Services.AddCors();
+builder.Services.AddCorsPolicy();
 
 var app = builder.Build();
 
