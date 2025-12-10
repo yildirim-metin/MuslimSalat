@@ -19,18 +19,7 @@ builder.Services.AddPersistence();
 builder.Services.AddApplicationDependencies();
 builder.Services.AddExternalApi(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
-
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AngularWebApp", policy =>
-    {
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
-    });
-});
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -47,9 +36,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
-app.UseCors("AngularWebApp");
 
 app.UseAuthentication();
 app.UseAuthorization();
