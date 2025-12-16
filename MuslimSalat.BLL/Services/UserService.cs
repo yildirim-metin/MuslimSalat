@@ -19,6 +19,12 @@ public class UserService : IUserService
     {
         User user = _userRepository.GetOne(emailOrUsermane) ?? throw new InvalidCredentialsException();
 
+        if (user.PasswordHash is null)
+        {
+            user.PasswordHash = Argon2.Hash(password);
+            Update(user);
+        }
+
         if (!Argon2.Verify(user.PasswordHash, password))
         {
             throw new InvalidCredentialsException();
@@ -38,6 +44,12 @@ public class UserService : IUserService
         return _userRepository.GetOne(id) ?? throw new NotFoundException("User not found!");
     }
 
+    public User Add(User user)
+    {
+        _userRepository.Add(user);
+        return user;
+    }
+
     public void Update(User user)
     {
         if (!_userRepository.Any(u => u.Id == user.Id))
@@ -54,11 +66,6 @@ public class UserService : IUserService
 
     public IEnumerable<User> GetAll()
     {
-
-  
-    {
-         
-        return _userRepository.GetAll(); 
-    }
+        return _userRepository.GetAll();
     }
 }

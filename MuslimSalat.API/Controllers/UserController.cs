@@ -10,6 +10,7 @@ namespace MuslimSalat.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = nameof(UserRole.Admin))]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -19,34 +20,29 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-    
     [HttpGet]
-    public ActionResult<IEnumerable<User>> GetAll()
+    public ActionResult<IEnumerable<UserFormDto>> GetAll()
     {
-        return Ok(_userService.GetAll());
+        return Ok(_userService.GetAll().ToUserFormDto());
     }
-
     
     [HttpPost]
-    public ActionResult Register([FromBody] RegisterFormDto form)
+    public ActionResult Register([FromBody] UserFormDto form)
     {
-        User user = form.ToUser(); // Ton mapper existant
-        _userService.Register(user, form.Password);
+        User user = form.ToUser();
+        _userService.Add(user);
         return Ok(user);
     }
-
     
     [HttpPut("{id}")]
-    [Authorize]
-    public ActionResult Update([FromRoute] int id, [FromBody] RegisterFormDto form)
+    public ActionResult Update([FromRoute] int id, [FromBody] UserFormDto form)
     {
-        User user = _userService.GetUser(id).CopyFromRegisterFormDto(form);
+        User user = _userService.GetUser(id).CopyFromUserFormDto(form);
         _userService.Update(user);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = nameof(UserRole.Admin))]
     public ActionResult DeleteAccount([FromRoute] int id)
     {
         _userService.Delete(id);
