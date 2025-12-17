@@ -17,6 +17,10 @@ public partial class User
 
     public int? IdAddress { get; set; }
 
+    public virtual ICollection<EventUser> EventUsers { get; set; } = new List<EventUser>();
+
+    public virtual ICollection<Event> Events { get; set; } = new List<Event>();
+
     public virtual Address? IdAddressNavigation { get; set; }
 
     public virtual Parameter? Parameter { get; set; }

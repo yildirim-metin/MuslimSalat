@@ -56,6 +56,9 @@ public static class DependencyInjection
         services.AddScoped<IRepository<Mission>, MissionRepository>();
         services.AddScoped<IMissionService, MissionService>();
 
+        services.AddScoped<IRepository<Event>, EventRepository>();
+        services.AddScoped<IEventService, EventService>();
+
         return services;
     }
 

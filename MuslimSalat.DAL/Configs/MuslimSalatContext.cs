@@ -14,6 +14,10 @@ public partial class MuslimSalatContext : DbContext
 
     public virtual DbSet<Address> Addresses { get; set; }
 
+    public virtual DbSet<Event> Events { get; set; }
+
+    public virtual DbSet<EventUser> EventUsers { get; set; }
+
     public virtual DbSet<Mission> Missions { get; set; }
 
     public virtual DbSet<Parameter> Parameters { get; set; }
@@ -35,6 +39,33 @@ public partial class MuslimSalatContext : DbContext
             entity.Property(e => e.Latitude).HasMaxLength(50);
             entity.Property(e => e.Locality).HasMaxLength(250);
             entity.Property(e => e.Longitude).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<Event>(entity =>
+        {
+            entity.Property(e => e.Name)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.IdUserResponsibleNavigation).WithMany(p => p.Events)
+                .HasForeignKey(d => d.IdUserResponsible)
+                .HasConstraintName("FK_Event_User");
+        });
+
+        modelBuilder.Entity<EventUser>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("FK_EventUser");
+
+            entity.ToTable("Event_User");
+
+            entity.HasOne(d => d.IdEventNavigation).WithMany(p => p.EventUsers)
+                .HasForeignKey(d => d.IdEvent)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_EventUser_Event");
+
+            entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.EventUsers)
+                .HasForeignKey(d => d.IdUser)
+                .HasConstraintName("FK_EventUser_User");
         });
 
         modelBuilder.Entity<Mission>(entity =>
