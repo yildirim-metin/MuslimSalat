@@ -9,4 +9,5 @@ public interface IEventService
     public void Add(Event e);
     public void Update(Event e);
     public void Delete(int id);
+    public void Subscribe(int idUser, int idEvent);
 }

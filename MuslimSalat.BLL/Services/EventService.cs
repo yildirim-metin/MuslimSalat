@@ -7,21 +7,21 @@ namespace MuslimSalat.BLL.Services;
 
 public class EventService : IEventService
 {
-    private readonly IRepository<Event> _eventRepository;
+    private readonly IEventRepository _eventRepository;
 
-    public EventService(IRepository<Event> eventRepository)
+    public EventService(IEventRepository eventRepository)
     {
         _eventRepository = eventRepository;
     }
 
     public Event GetEvent(int id)
     {
-        return _eventRepository.GetOne(id) ?? throw new NotFoundException("Event not found!");
+        return _eventRepository.GetOneUserIncluded(id) ?? throw new NotFoundException("Event not found!");
     }
 
     public IEnumerable<Event> GetEvents()
     {
-        return _eventRepository.GetAll();
+        return _eventRepository.GetAllUserIncluded();
     }
 
     public void Add(Event e)
@@ -37,5 +37,14 @@ public class EventService : IEventService
     public void Delete(int id)
     {
         _eventRepository.Delete(id);
+    }
+
+    public void Subscribe(int idUser, int idEvent)
+    {
+        if (_eventRepository.IsAlreadySubscribe(idUser, idEvent))
+        {
+            throw new AlreadySubscribedException();
+        }
+        _eventRepository.Subscribe(idUser, idEvent);
     }
 }

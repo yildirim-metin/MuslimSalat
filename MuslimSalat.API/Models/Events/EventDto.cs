@@ -6,5 +6,7 @@ public record class EventDto
 
     public required string Name { get; set; }
 
-    public int IdUserResponsible { get; set; }
+    public required string Responsible { get; set; }
+
+    public required int IdUserResponsible { get; set; }
 }

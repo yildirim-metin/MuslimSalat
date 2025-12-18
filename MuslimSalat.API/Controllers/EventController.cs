@@ -27,14 +27,14 @@ public class EventController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<EventDto> GetEvent(int id)
+    public ActionResult<RegisterEventDto> GetEvent(int id)
     {
         Event e = _eventService.GetEvent(id);
-        return Ok(e.ToEventDto());
+        return Ok(e.ToRegisterEventDto());
     }
 
     [HttpPost]
-    public ActionResult<EventDto> Add([FromBody] EventDto eventDto)
+    public ActionResult<EventDto> Add([FromBody] RegisterEventDto eventDto)
     {
         Event e = eventDto.ToEvent();
         _eventService.Add(e);
@@ -42,7 +42,7 @@ public class EventController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public ActionResult Update([FromRoute] int id, [FromBody] EventDto eventDto)
+    public ActionResult Update([FromRoute] int id, [FromBody] RegisterEventDto eventDto)
     {
         Event e = _eventService.GetEvent(id).CopyFromEventDto(eventDto);
         _eventService.Update(e);
@@ -54,5 +54,12 @@ public class EventController : ControllerBase
     {
         _eventService.Delete(id);
         return Accepted();
+    }
+
+    [HttpPost("{idUser}/subscribe/{idEvent}")]
+    public IActionResult Subscribe([FromRoute] int idUser,[FromRoute] int idEvent)
+    {
+        _eventService.Subscribe(idUser, idEvent);
+        return NoContent();
     }
 }
