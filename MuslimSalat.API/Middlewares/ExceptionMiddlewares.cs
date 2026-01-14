@@ -20,6 +20,7 @@ public class ExceptionMiddleware
         }
         catch (Exception ex)
         {
+            Sentry.SentrySdk.CaptureException(ex);
             await HandleException(context, ex);
         }
     }
