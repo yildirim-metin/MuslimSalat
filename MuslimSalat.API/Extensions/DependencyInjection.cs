@@ -1,15 +1,14 @@
 using System.Text;
+using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using MuslimSalat.BLL.Exceptions;
 using MuslimSalat.BLL.Services;
 using MuslimSalat.BLL.Services.Interfaces;
 using MuslimSalat.DAL.Configs;
 using MuslimSalat.DAL.Repositories;
 using MuslimSalat.DAL.Repositories.Interfaces;
-using MuslimSalat.DAL.Utils;
 using MuslimSalat.DL.Entities;
 
 namespace MuslimSalat.API.Extensions;
@@ -49,7 +48,7 @@ public static class DependencyInjection
         services.AddScoped<IAuthService, AuthService>();
 
         services.AddScoped<IPrayerTimeService, PrayerTimeService>();
-        
+
         services.AddScoped<IRepository<Prayer>, PrayerRepository>();
         services.AddScoped<IPrayerService, PrayerService>();
 
@@ -66,7 +65,7 @@ public static class DependencyInjection
     {
         services.AddDbContext<MuslimSalatContext>(options =>
         {
-             options.UseSqlServer(configuration["CONNECTION_STRING"]);
+            options.UseSqlServer(configuration["CONNECTION_STRING"]);
         });
 
         return services;
@@ -96,6 +95,25 @@ public static class DependencyInjection
             });
         });
 
+        return services;
+    }
+
+    public static IWebHostBuilder AddSentryConfig(this IWebHostBuilder webHostBuilder, IConfiguration configuration)
+    {
+        return webHostBuilder.UseSentry(o =>
+        {
+            o.Dsn = configuration["Sentry:Dsn"];
+            o.TracesSampleRate = 1.0;
+            o.Debug = true;
+        });
+    }
+
+    public static IServiceCollection AddRateLimiterConfig(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddMemoryCache();
+        services.Configure<IpRateLimitOptions>(configuration.GetSection("IpRateLimiting"));
+        services.AddInMemoryRateLimiting();
+        services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
         return services;
     }
 }
